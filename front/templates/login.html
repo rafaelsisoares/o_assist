@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Bem-vindo!
+{% endblock %}
+
+{% block content %}
+<section>
+    <form action="/" method="post">
+        <label for="email">
+            E-mail:
+            <input type="email" name="email" placeholder="email@email.com">
+        </label>
+        <label for="password">
+            Senha:
+            <input type="password" name="password">
+        </label>
+        <button type="submit">Entrar</button>
+    </form>
+</section>
+{% endblock %}
