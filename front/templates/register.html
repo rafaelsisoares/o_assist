@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Criar conta
+{% endblock %}
+
+{% block content %}
+<section>
+    <form action="register/" method="post">
+        <label for="name">
+            Nome:
+            <input type="text" name="name" placeholder="Seu nome" required>
+        </label>
+        <label for="user">
+            Nome de usuário:
+            <input type="text" name="user" placeholder="@seunomedeusuario" required>
+        </label>
+        <label for="email">
+            E-mail:
+            <input type="email" name="email" placeholder="email@email.com" required>
+        </label>
+        <label for="password">
+            Senha:
+            <input type="password" name="password" placeholder="Sua senha">
+        </label>
+        <button type="submit">Criar</button>
+    </form>
+</section>
+{% endblock %}

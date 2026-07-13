@@ -1,4 +1,3 @@
--- Active: 1779836135811@@127.0.0.1@3306@o_assist_db
 """
 Django settings for o_assist project.
 
