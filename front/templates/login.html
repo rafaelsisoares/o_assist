@@ -7,13 +7,13 @@ Bem-vindo!
 {% block content %}
 <section>
     <form action="/" method="post">
-        <label for="email">
-            E-mail:
-            <input type="email" name="email" placeholder="email@email.com">
+        <label for="user">
+            Nome de usuário:
+            <input type="text" name="user" placeholder="@seunomedeusuario" required>
         </label>
         <label for="password">
             Senha:
-            <input type="password" name="password">
+            <input type="password" name="password" required>
         </label>
         <button type="submit">Entrar</button>
     </form>
