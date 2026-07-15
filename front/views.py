@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Login, User
+from .models import Login, User, Message
 from .forms import UserForm, LoginForm
 
 
@@ -31,3 +31,11 @@ def register(request):
         'form': form,
     }
     return render(request, 'register.html', context)
+
+
+def chat(request):
+    messages = Message.objects.all()
+    context = {
+        'messages': messages,
+    }
+    return render(request, 'chat.html', context)

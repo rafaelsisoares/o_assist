@@ -17,3 +17,10 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Message(models.Model):
+    content = models.TextField()
+    sender = models.CharField(max_length=150)
+    receiver = models.CharField(max_length=150)
+    timestamp = models.DateTimeField(auto_now_add=True)
