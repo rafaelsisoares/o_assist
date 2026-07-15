@@ -7,9 +7,10 @@ Bem-vindo!
 {% block content %}
 <section>
     <form action="/" method="post">
-        <label for="user">
+        {% csrf_token %}
+        <label for="username">
             Nome de usuário:
-            <input type="text" name="user" placeholder="@seunomedeusuario" required>
+            <input type="text" name="username" placeholder="@seunomedeusuario" required>
         </label>
         <label for="password">
             Senha:
@@ -17,5 +18,8 @@ Bem-vindo!
         </label>
         <button type="submit">Entrar</button>
     </form>
+    {% if fail_login %}
+        <p>Nome de usuário e/ou senha incorretos.</p>
+    {% endif %}
 </section>
 {% endblock %}

@@ -1,2 +1,102 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Static files (caso sejam gerados localmente)
+staticfiles/
+
+# Environment variables
 .env
-.venv
+.env.*
+!.env.example
+
+# Secrets
+*.pem
+*.key
+
+# Migrations (opcional)
+# Se preferir versionar as migrations, remova estas linhas.
+**/migrations/
+!**/migrations/__init__.py
+
+# Pytest
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Coverage
+.tox/
+.nox/
+
+# Type checking
+.mypy_cache/
+.pytype/
+
+# Lint
+.ruff_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo

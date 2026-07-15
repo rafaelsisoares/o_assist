@@ -1,17 +1,33 @@
 from django.shortcuts import render, redirect
 from .models import Login, User
+from .forms import UserForm, LoginForm
 
 
 def index(request):
-    return render(request, 'login.html')
+    if request.method == 'POST' and "username" in request.POST:
+        data = request.POST
+        username = data.get('username')
+        password = data.get('password')
+
+        try:
+            login = Login.objects.get(username=username, password=password)
+            user = User.objects.get(user=login.username)
+            return redirect('home')
+        except Login.DoesNotExist:
+            return render(request, 'login.html', {'fail_login': True})
+    return render(request, 'login.html', {'fail_login': False})
 
 
 def register(request):
+    form = UserForm()
     if request.method == 'POST':
-        data = request.POST
+        form = UserForm(request.POST)
 
-        if data.is_valid():
-            User.objects.create(**data.cleaned_data)
-            return redirect('login')
+        if form.is_valid():
+            User.objects.create(**form.cleaned_data)
+            return redirect('chat-page')
 
-    return render(request, 'register.html')
+    context = {
+        'form': form,
+    }
+    return render(request, 'register.html', context)
