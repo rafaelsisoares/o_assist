@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Login
+from .models import User, Login, Message
 
 
 class UserForm(forms.ModelForm):
@@ -24,3 +24,9 @@ class LoginForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
