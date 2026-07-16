@@ -9,3 +9,5 @@ typer==0.9.0
 shellingham==1.5.0.post1
 django-extensions==3.2.3
 django-filter==23.2
+django-static-autocollect==0.1
+whitenoise==6.12.0
