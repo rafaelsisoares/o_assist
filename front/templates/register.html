@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Criar conta
+{% endblock %}
+
+{% block content %}
+<section>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Criar</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Chat
+{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        {% for message in messages %}
+
+        {% if message.sender == "Bot" %}
+            <div class="left">
+                <p>
+                    {{ message.content }}
+                </p>
+            </div>
+        {% else %}
+            <div class="right">
+                <p>
+                    {{ message.content }}
+                </p>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+</section>
+{% endblock %}
