@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
-from .models import Login, User, Message
+from django.contrib.auth.models import User
+from .models import Login
 from .forms import UserForm, LoginForm, MessageForm
+from api.models import Person, Message
 
 
 def index(request):
-    if request.method == 'POST' and "username" in request.POST:
+    if request.method == 'POST':
         data = request.POST
-        username = data.get('username')
+        username = data.get('nickname')
         password = data.get('password')
 
         try:
-            login = Login.objects.get(username=username, password=password)
-            user = User.objects.get(user=login.username)
+            user = User.objects.get(username=username, password=password)
             return redirect('home')
         except Login.DoesNotExist:
             return render(request, 'login.html', {'fail_login': True})
@@ -24,7 +25,18 @@ def register(request):
         form = UserForm(request.POST)
 
         if form.is_valid():
-            User.objects.create(**form.cleaned_data)
+            data = form.cleaned_data
+            new_user = {
+                "username": data['nickname'],
+                "password": data['password'],
+                "first_name": data['name'],
+                "email": data['email'],
+                "is_staff": False,
+                "is_superuser": False,
+                "is_active": True,
+            }
+            User.objects.create_user(**new_user)
+            Person.objects.create(**data)
             return redirect('chat-page')
 
     context = {
