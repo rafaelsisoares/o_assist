@@ -1,19 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Login
-from .forms import UserForm, LoginForm, MessageForm
+from .forms import UserForm, MessageForm
 from api.models import Person, Message
+import requests
+
+
+API_HOST = 'http://127.0.0.1:8000/api/'
 
 
 def index(request):
     if request.method == 'POST':
-        data = request.POST
-        username = data.get('nickname')
-        password = data.get('password')
-
         try:
-            user = User.objects.get(username=username, password=password)
-            return redirect('home')
+            tokens = requests.post(f'{API_HOST}token/', data={
+                'username': request.POST['nickname'],
+                'password': request.POST['password']
+            })
+            print(tokens.json())
+            return redirect('chat-page')
         except Login.DoesNotExist:
             return render(request, 'login.html', {'fail_login': True})
     return render(request, 'login.html', {'fail_login': False})
