@@ -11,14 +11,16 @@ API_HOST = 'http://127.0.0.1:8000/api/'
 
 def index(request):
     if request.method == 'POST':
-        try:
-            tokens = requests.post(f'{API_HOST}token/', data={
-                'username': request.POST['nickname'],
-                'password': request.POST['password']
-            })
-            print(tokens.json())
+        tokens = requests.post(f'{API_HOST}token/', data={
+            'username': request.POST['nickname'],
+            'password': request.POST['password']
+        })
+        if tokens.status_code == 200:
+            request.session['refresh_token'] = tokens.json()['refresh']
+            request.session['access_token'] = tokens.json()['access']
+            request.session['nickname'] = request.POST['nickname']
             return redirect('chat-page')
-        except Login.DoesNotExist:
+        else:
             return render(request, 'login.html', {'fail_login': True})
     return render(request, 'login.html', {'fail_login': False})
 
@@ -56,13 +58,15 @@ def chat(request):
         "what is your name?": "I am your friendly assistant bot.",
         "bye": "Goodbye! Have a great day!",
     }
+    print(request.user)
     form = MessageForm()
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
+            user = request.session.get('nickname', 'Visitante')
             new_message_obj = {
                 'content': form.cleaned_data['content'],
-                'sender': request.user.username if request.user.is_authenticated else "Visitante",
+                'sender': user,
                 'receiver': "Bot"
             }
 
@@ -72,14 +76,18 @@ def chat(request):
             bot_message_obj = {
                 'content': bot_response,
                 'sender': "Bot",
-                'receiver': request.user.username if request.user.is_authenticated else "Visitante"
+                'receiver': user
             }
 
             Message.objects.create(**bot_message_obj)
 
-    messages = Message.objects.all()
+    headers = {
+        "Authorization": f"Bearer {request.session['access_token']}"
+    }
+
+    messages = requests.get(f'{API_HOST}messages/', headers=headers)
     context = {
-        'messages': messages,
+        'messages': messages.json(),
         'form': form
     }
     return render(request, 'chat.html', context)
