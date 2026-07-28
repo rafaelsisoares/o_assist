@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from time import sleep
 from .models import Login
 from .forms import UserForm, MessageForm
+from .utils.weather import build_bot_response
 from api.models import Person, Message
 import requests
 
 
 API_HOST = 'http://127.0.0.1:8000/api/'
+options = {
+    "weather": False
+}
 
 
 def index(request):
@@ -58,7 +63,6 @@ def chat(request):
         "what is your name?": "I am your friendly assistant bot.",
         "bye": "Goodbye! Have a great day!",
     }
-    print(request.user)
     form = MessageForm()
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -72,7 +76,17 @@ def chat(request):
 
             Message.objects.create(**new_message_obj)
 
-            bot_response = PHRASES.get(form.cleaned_data['content'].lower(), "I'm sorry, I don't understand that.")
+            sleep(2)
+
+            if "do tempo" in new_message_obj['content']:
+                bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
+                options["weather"] = True
+            elif options["weather"]:
+                bot_response = build_bot_response(new_message_obj['content'])
+                options["weather"] = False
+            else:
+                bot_response = PHRASES.get(form.cleaned_data['content'].lower(), "I'm sorry, I don't understand that.")
+
             bot_message_obj = {
                 'content': bot_response,
                 'sender': "Bot",
