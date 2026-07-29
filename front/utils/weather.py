@@ -1,5 +1,6 @@
 import requests
 import os
+import math
 from dotenv import load_dotenv
 from .weather_info_codes import WEATHER_INFO_CODES
 
@@ -16,7 +17,7 @@ def get_weather(city):
         weather_info = {
             'city': data['name'],
             'weather': data['weather'],
-            'temperature': data['main']['temp'],
+            'temperature': math.ceil(data['main']['temp']),
             'description': data['weather'][0]['description'],
         }
         print(weather_info)
@@ -30,6 +31,6 @@ def build_bot_response(content):
     if not weather:
         return "Desculpe, não encontrei esse local, vamos tentar de novo."
     return (
-        f'O clima em {content} é {weather["description"]}, '
+        f'O clima em {content.capitalize()} é {weather["description"]}, '
         f'a temperatura atual é {weather["temperature"]} °C.'
     )

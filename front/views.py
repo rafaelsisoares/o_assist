@@ -99,9 +99,18 @@ def chat(request):
         "Authorization": f"Bearer {request.session['access_token']}"
     }
 
-    messages = requests.get(f'{API_HOST}messages/', headers=headers)
+    response_messages = requests.get(f'{API_HOST}messages/', headers=headers)
+    if response_messages.status_code == 401:
+        refresh_token = request.session.get('refresh_token')
+        refresh_response = requests.post(f'{API_HOST}token/refresh/', data={'refresh': refresh_token})
+        if refresh_response.status_code == 200:
+            request.session['access_token'] = refresh_response.json()['access']
+            headers["Authorization"] = f"Bearer {request.session['access_token']}"
+            response_messages = requests.get(f'{API_HOST}messages/', headers=headers)
+        else:
+            return redirect('index')
     context = {
-        'messages': messages.json(),
+        'messages': response_messages.json(),
         'form': form
     }
     return render(request, 'chat.html', context)
