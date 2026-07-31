@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from time import sleep
-from .models import Login
 from .forms import UserForm, MessageForm
 from .utils.weather import build_bot_response
+from .utils.current_time import current_time
 from api.models import Person, Message
 import requests
 
@@ -47,6 +47,14 @@ def register(request):
                 "is_active": True,
             }
             User.objects.create_user(**new_user)
+            response_tokens = requests.post(f'{API_HOST}token/', data={
+                'username': data['nickname'],
+                'password': data['password']
+            })
+            if response_tokens.status_code == 200:
+                request.session['refresh_token'] = response_tokens.json()['refresh']
+                request.session['access_token'] = response_tokens.json()['access']
+                request.session['nickname'] = data['nickname']
             Person.objects.create(**data)
             return redirect('chat-page')
 
@@ -76,9 +84,11 @@ def chat(request):
 
             Message.objects.create(**new_message_obj)
 
-            sleep(2)
+            # sleep(2)
 
-            if "do tempo" in new_message_obj['content']:
+            if "horas" in new_message_obj['content']:
+                bot_response = f"Agora são {current_time()}"
+            elif "do tempo" in new_message_obj['content']:
                 bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
                 options["weather"] = True
             elif options["weather"]:
