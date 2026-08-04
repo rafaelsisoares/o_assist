@@ -21,5 +21,8 @@ class Message(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
-    due_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
+    person = models.ForeignKey(
+        to=Person, on_delete=models.CASCADE, related_name="tasks"
+    )
