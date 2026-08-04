@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Person, Message
-from .serializers import PersonSerializer, MessageSerializer
+from .models import Person, Message, Task
+from .serializers import PersonSerializer, MessageSerializer, TaskSerializer
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -18,3 +18,12 @@ class MessageViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(person=self.request.user)
