@@ -16,3 +16,10 @@ class Message(models.Model):
     sender = models.CharField(max_length=150)
     receiver = models.CharField(max_length=150)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    due_date = models.DateTimeField()
+    completed = models.BooleanField(default=False)
