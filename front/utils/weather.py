@@ -49,6 +49,6 @@ def build_bot_response(content):
         return "Desculpe, não encontrei esse local, vamos tentar de novo."
     return (
         f'O clima em {content.capitalize()} é {weather["description"]}, '
-        f'a temperatura média para hoje é {weather["temperature"]} °C, '
-        f'e a visibilidade é de {weather["visibility"]} metros.'
+        f'a temperatura média para hoje é {weather["temperature"]} °C '
+        f'e a visibilidade é de {weather["visibility"] / 1000} km.'
     )

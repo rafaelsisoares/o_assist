@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from time import sleep
 from .forms import UserForm, MessageForm
 from .utils.weather import build_bot_response
 from .utils.current_time import current_time
 from api.models import Person, Message
+from AI.views import generate_text
 import requests
 
 
@@ -95,7 +95,7 @@ def chat(request):
                 bot_response = build_bot_response(new_message_obj['content'])
                 options["weather"] = False
             else:
-                bot_response = PHRASES.get(form.cleaned_data['content'].lower(), "I'm sorry, I don't understand that.")
+                bot_response = generate_text(new_message_obj['content'])
 
             bot_message_obj = {
                 'content': bot_response,
@@ -116,7 +116,9 @@ def chat(request):
         if refresh_response.status_code == 200:
             request.session['access_token'] = refresh_response.json()['access']
             headers["Authorization"] = f"Bearer {request.session['access_token']}"
-            response_messages = requests.get(f'{API_HOST}messages/', headers=headers)
+            response_messages = requests.get(
+                f'{API_HOST}messages/', headers=headers
+                )
         else:
             return redirect('index')
     context = {

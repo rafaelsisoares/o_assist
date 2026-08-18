@@ -14,3 +14,4 @@ whitenoise==6.12.0
 python-dotenv==1.2.1
 djangorestframework-simplejwt==5.5.1
 requests==2.34.2
+google-genai==2.3.0
