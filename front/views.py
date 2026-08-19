@@ -6,9 +6,10 @@ from .utils.current_time import current_time
 from api.models import Person, Message
 from AI.views import generate_text
 import requests
+import os
 
 
-API_HOST = 'http://127.0.0.1:8000/api/'
+API_HOST = os.environ.get('API_HOST', 'http://127.0.0.1:8000/api/')
 options = {
     "weather": False
 }
@@ -65,12 +66,6 @@ def register(request):
 
 
 def chat(request):
-    PHRASES = {
-        "hello": "Hello! How can I assist you today?",
-        "how are you?": "I'm just a bot, but I'm here to help you!",
-        "what is your name?": "I am your friendly assistant bot.",
-        "bye": "Goodbye! Have a great day!",
-    }
     form = MessageForm()
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -83,8 +78,6 @@ def chat(request):
             }
 
             Message.objects.create(**new_message_obj)
-
-            # sleep(2)
 
             if "horas" in new_message_obj['content']:
                 bot_response = f"Agora são {current_time()}"
