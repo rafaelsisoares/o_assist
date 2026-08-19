@@ -79,16 +79,28 @@ def chat(request):
 
             Message.objects.create(**new_message_obj)
 
-            if "horas" in new_message_obj['content']:
-                bot_response = f"Agora são {current_time()}"
-            elif "do tempo" in new_message_obj['content']:
-                bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
-                options["weather"] = True
-            elif options["weather"]:
-                bot_response = build_bot_response(new_message_obj['content'])
-                options["weather"] = False
-            else:
-                bot_response = generate_text(new_message_obj['content'])
+            match new_message_obj['content'].lower():
+                case content if "horas" in content:
+                    bot_response = f"Agora são {current_time()}"
+                case content if "do tempo" in content:
+                    bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
+                    options["weather"] = True
+                case content if options["weather"]:
+                    bot_response = build_bot_response(new_message_obj['content'])
+                    options["weather"] = False
+                case _:
+                    bot_response = generate_text(new_message_obj['content'])
+
+            # if "horas" in new_message_obj['content']:
+            #     bot_response = f"Agora são {current_time()}"
+            # elif "do tempo" in new_message_obj['content']:
+            #     bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
+            #     options["weather"] = True
+            # elif options["weather"]:
+            #     bot_response = build_bot_response(new_message_obj['content'])
+            #     options["weather"] = False
+            # else:
+            #     bot_response = generate_text(new_message_obj['content'])
 
             bot_message_obj = {
                 'content': bot_response,
