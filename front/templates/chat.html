@@ -5,6 +5,13 @@ Chat
 {% endblock %}
 
 {% block content %}
+<header>
+    <nav>
+        <button>
+            <a href="{% url 'login-page' %}">Sair</a>
+        </button>
+    </nav>
+</header>
 <section>
     <div>
         {% for message in messages %}
