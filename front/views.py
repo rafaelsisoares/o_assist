@@ -20,7 +20,7 @@ def index(request):
         tokens = requests.post(f'{API_HOST}token/', data={
             'username': request.POST['nickname'],
             'password': request.POST['password']
-        })
+        }, timeout=5)
         if tokens.status_code == 200:
             request.session['refresh_token'] = tokens.json()['refresh']
             request.session['access_token'] = tokens.json()['access']
@@ -51,7 +51,7 @@ def register(request):
             response_tokens = requests.post(f'{API_HOST}token/', data={
                 'username': data['nickname'],
                 'password': data['password']
-            })
+            }, timeout=5)
             if response_tokens.status_code == 200:
                 request.session['refresh_token'] = response_tokens.json()['refresh']
                 request.session['access_token'] = response_tokens.json()['access']
@@ -114,7 +114,7 @@ def chat(request):
                 f'{API_HOST}messages/', headers=headers
                 )
         else:
-            return redirect('index')
+            return redirect('login-page')
     context = {
         'messages': response_messages.json(),
         'form': form
