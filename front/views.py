@@ -8,7 +8,6 @@ from AI.views import generate_text
 import requests
 import os
 
-
 API_HOST = os.environ.get('API_HOST', 'http://127.0.0.1:8000/api/')
 options = {
     "weather": False
