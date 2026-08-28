@@ -1,17 +1,18 @@
 from django import forms
-from .models import User, Login, Message
+from .models import Login
+from api.models import Person, Message
 
 
 class UserForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['name', 'user', 'email', 'password']
+        model = Person
+        fields = ['name', 'nickname', 'email', 'password']
         widgets = {
             'password': forms.PasswordInput(),
         }
         labels = {
             'name': 'Nome',
-            'user': 'Nome de usuário',
+            'nickname': 'Nome de usuário',
             'email': 'E-mail',
             'password': 'Senha',
         }
