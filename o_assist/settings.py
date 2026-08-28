@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "AI",
     "rest_framework",
     "rest_framework_simplejwt",
+    "tailwind",
+    "theme",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
+    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 ROOT_URLCONF = "o_assist.urls"
 
@@ -147,3 +153,6 @@ REST_FRAMEWORK = {
 # Simple JWT settings
 ACCESS_TOKEN_LIFETIME = int(os.environ.get("ACCESS_TOKEN_LIFETIME", 5))  # in minutes
 REFRESH_TOKEN_LIFETIME = int(os.environ.get("REFRESH_TOKEN_LIFETIME", 60))  # in minutes
+
+# Tailwind CSS settings
+TAILWIND_APP_NAME = "theme"
