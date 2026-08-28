@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .forms import UserForm, MessageForm
 from .utils.weather import build_bot_response
 from .utils.current_time import current_time
+from .utils.messages import convert_md_to_html
 from api.models import Person, Message
 from AI.views import generate_text
 import requests
@@ -27,6 +28,7 @@ def index(request):
             return redirect('chat-page')
         else:
             return render(request, 'login.html', {'fail_login': True})
+    request.session.flush()
     return render(request, 'login.html', {'fail_login': False})
 
 
@@ -61,6 +63,7 @@ def register(request):
     context = {
         'form': form,
     }
+
     return render(request, 'register.html', context)
 
 
@@ -78,20 +81,23 @@ def chat(request):
 
             Message.objects.create(**new_message_obj)
 
-            match new_message_obj['content'].lower():
-                case content if "horas" in content:
-                    bot_response = f"Agora são {current_time()}"
-                case content if "do tempo" in content:
-                    bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
-                    options["weather"] = True
-                case content if options["weather"]:
-                    bot_response = build_bot_response(new_message_obj['content'])
-                    options["weather"] = False
-                case _:
-                    bot_response = generate_text(new_message_obj['content'])
+            if options["weather"]:
+                bot_response = build_bot_response(new_message_obj['content'])
+                options["weather"] = False
+            else:
+                match new_message_obj['content'].lower():
+                    case content if "horas" in content:
+                        bot_response = f"Agora são {current_time()}"
+                    case content if "do tempo" in content:
+                        bot_response = "Perfeito! Agora me diga: qual cidade você gostaria de saber a previsão do tempo?"
+                        options["weather"] = True
+                    case _:
+                        bot_response = generate_text(
+                            new_message_obj['content']
+                        )
 
             bot_message_obj = {
-                'content': bot_response,
+                'content': convert_md_to_html(bot_response),
                 'sender': "Bot",
                 'receiver': user
             }

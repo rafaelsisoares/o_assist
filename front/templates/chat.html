@@ -18,9 +18,7 @@ Chat
 
         {% if message.sender == "Bot" %}
             <div class="left">
-                <p>
-                    {{ message.content }}
-                </p>
+                {{ message.content|safe }}
             </div>
         {% else %}
             <div class="right">
