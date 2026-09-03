@@ -1,2 +1,2 @@
-django: python manage.py runserver
+django: python3 manage.py runserver
 tailwind: python manage.py tailwind start

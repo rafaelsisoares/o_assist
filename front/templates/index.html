@@ -7,7 +7,14 @@
     <title>{% block title %}{% endblock %}</title>
     {% tailwind_css %}
 </head>
-<body>
-    <main>{% block content %} {% endblock %}</main>
+<body class="m-0 box-border">
+    <main>
+        <header class="m-auto p-3 bg-orange-400">
+            <nav class="flex flex-row-reverse">
+                {% block nav %} {% endblock %}
+            </nav>
+        </header>
+        {% block content %} {% endblock %}
+    </main>
 </body>
 </html>

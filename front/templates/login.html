@@ -4,28 +4,26 @@
 Bem-vindo!
 {% endblock %}
 
+{% block nav %}
+<button class="hover:bg-white rounded-xl mr-10 p-1 content-center">
+    <a href="{% url 'register-page' %}">Cadastre-se</a>
+</button>
+{% endblock %}
+
 {% block content %}
-<section>
-    <form action="/" method="post">
+<section class="m-auto p-5">
+    <form action="/" method="post" class="flex flex-col border w-1/2 p-2 m-auto">
         {% csrf_token %}
-        <label for="nickname">
-            Nome de usuário:
-            <input type="text" name="nickname" placeholder="@seunomedeusuario" required>
+        <label for="nickname" class="p-2">
+            <input class="m-auto w-1/1 p-1" type="text" name="nickname" placeholder="@seunomedeusuario" required>
         </label>
-        <label for="password">
-            Senha:
-            <input type="password" name="password" required>
+        <label for="password" class="p-2">
+            <input class="m-auto w-1/1 p-1" type="password" name="password" placeholder="Senha" required>
         </label>
-        <button type="submit">Entrar</button>
+        <button type="submit" class="rounded-md hover:bg-orange-400 p-1 w-1/5 m-auto">Entrar</button>
     </form>
     {% if fail_login %}
-        <p>Nome de usuário e/ou senha incorretos.</p>
+        <p class="text-red-700 text-center">Nome de usuário e/ou senha incorretos.</p>
     {% endif %}
-</section>
-<section>
-    <p>ou</p>
-    <button>
-        <a href="{% url 'register-page' %}">Crie uma nova conta</a>
-    </button>
 </section>
 {% endblock %}
