@@ -12,7 +12,7 @@ Bem-vindo!
 
 {% block content %}
 <section class="m-auto p-5">
-    <form action="/" method="post" class="flex flex-col border w-1/2 p-2 m-auto">
+    <form action="/" method="post" class="flex flex-col shadow-xl rounded-md w-1/2 p-2 m-auto">
         {% csrf_token %}
         <label for="nickname" class="p-2">
             <input class="m-auto w-1/1 p-1" type="text" name="nickname" placeholder="@seunomedeusuario" required>
@@ -20,10 +20,10 @@ Bem-vindo!
         <label for="password" class="p-2">
             <input class="m-auto w-1/1 p-1" type="password" name="password" placeholder="Senha" required>
         </label>
-        <button type="submit" class="rounded-md hover:bg-orange-400 p-1 w-1/5 m-auto">Entrar</button>
+        <button type="submit" class="rounded-md hover:bg-orange-400 focus:outline-2 focus:outline-offset-1 focus:outline-orange-400 active:bg-orange-500 p-1 w-1/5 m-auto">Entrar</button>
     </form>
     {% if fail_login %}
-        <p class="text-red-700 text-center">Nome de usuário e/ou senha incorretos.</p>
+        <p class="text-red-700 text-center mt-5">Nome de usuário e/ou senha incorretos.</p>
     {% endif %}
 </section>
 {% endblock %}
