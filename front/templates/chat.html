@@ -32,7 +32,7 @@ Chat
     <div class="mt-10 p-5 rounded-xl shadow-xl/20">
         <form action="" method="post" class="flex flex-row justify-between">
             {% csrf_token %}
-            {% render_field form.content class+="p-1 w-[90%]"|append_attr: placeholder="Pergunte o que quiser..."%}
+            {% render_field form.content class+="p-1 w-[90%] bg-gray-200 rounded-md"|append_attr: placeholder="Pergunte o que quiser..."%}
             <input type="submit" class="rounded-md p-1 hover:bg-orange-400 focus:outline-2 focus:outline-offset-1 focus:outline-orange-400 active:bg-orange-500 cursor:pointer" value="Enviar">
         </form>
     </div>

@@ -12,7 +12,7 @@ class Person(models.Model):
 
 
 class Message(models.Model):
-    content = models.TextField()
+    content = models.CharField(max_length=500)
     sender = models.CharField(max_length=150)
     receiver = models.CharField(max_length=150)
     timestamp = models.DateTimeField(auto_now_add=True)

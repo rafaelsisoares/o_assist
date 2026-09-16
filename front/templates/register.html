@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% load widget_tweaks %}
+{% load static %}
 
 {% block title %}
 Criar conta
@@ -13,6 +14,7 @@ Criar conta
 
 {% block content %}
 <section class="mt-20">
+    <img src="{% static 'img/O_ASSIST.gif' %}" alt="Logo" class="h-50 w-50 m-auto">
     <form action="" method="post" class="w-1/2 m-auto mt-10 p-5 shadow-xl flex flex-col gap-y-3">
         {% csrf_token %}
         {% render_field form.name class+="p-1"|append_attr: placeholder="Nome" %}

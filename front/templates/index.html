@@ -10,11 +10,15 @@
 <body class="m-0 box-border">
     <main>
         <header class="m-auto p-3 bg-orange-400 fixed top-0 left-0 right-0">
-            <nav class="flex flex-row-reverse">
+            <nav class="flex flex-row-reverse justify-between">
                 {% block nav %} {% endblock %}
+                <img src="{% static 'img/O_ASSIST_header.webp'%}" alt="Logo do Header" class="w-30 h-10 ml-10">
             </nav>
         </header>
         {% block content %} {% endblock %}
     </main>
+    <footer>
+        {% block footer %} {% endblock %}
+    </footer>
 </body>
 </html>
