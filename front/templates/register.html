@@ -20,8 +20,10 @@ Criar conta
         {% render_field form.name class+="p-1"|append_attr: placeholder="Nome" %}
         {% render_field form.nickname class+="p-1"|append_attr: placeholder="Nome de usuário" %}
         {% render_field form.email class+="p-1"|append_attr: placeholder="E-mail" %}
-        {% render_field form.password class+="p-1"|append_attr: placeholder="Senha" %}
+        {% render_field form.password class+="p-1 pass"|append_attr: placeholder="Senha" %}
+        <button type="button" id="show-password">{O}</button>
         <button type="submit" class="m-auto mt-2 p-2 hover:bg-orange-400 focus:outline-2 focus:outline-offset-1 focus:outline-orange-400 active:bg-orange-500 rounded-md">Criar</button>
     </form>
 </section>
+<script src="{% static 'script/showPassword.js' %}"></script>
 {% endblock %}
