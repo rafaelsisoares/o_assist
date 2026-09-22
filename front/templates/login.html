@@ -20,7 +20,8 @@ Bem-vindo!
             <input class="m-auto w-1/1 p-1" type="text" name="nickname" placeholder="@seunomedeusuario" required>
         </label>
         <label for="password" class="p-2">
-            <input class="m-auto w-1/1 p-1" type="password" name="password" placeholder="Senha" required>
+            <input class="m-auto w-1/1 p-1 pass" type="password" name="password" placeholder="Senha" required>
+            <button type="button" id="show-password">{O}</button>
         </label>
         <button type="submit" class="rounded-md hover:bg-orange-400 focus:outline-2 focus:outline-offset-1 focus:outline-orange-400 active:bg-orange-500 p-1 w-1/5 m-auto">Entrar</button>
     </form>
@@ -28,4 +29,6 @@ Bem-vindo!
         <p class="text-red-700 text-center mt-5">Nome de usuário e/ou senha incorretos.</p>
     {% endif %}
 </section>
+
+<script src="{% static 'script/showPassword.js' %}"></script>
 {% endblock %}
