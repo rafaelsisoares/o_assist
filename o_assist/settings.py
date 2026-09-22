@@ -29,7 +29,10 @@ SECRET_KEY = "django-insecure-qmn7b%tm(c0)6je$#mn)hh=x@n-lk5ua0o7r&n2ff80!)@u^6(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "overshot-refract-yield.ngrok-free.dev",
+    "127.0.0.1"
+]
 
 
 # Application definition
@@ -161,3 +164,12 @@ REFRESH_TOKEN_LIFETIME = int(os.environ.get("REFRESH_TOKEN_LIFETIME", 60))  # in
 
 # Tailwind CSS settings
 TAILWIND_APP_NAME = "theme"
+
+
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://overshot-refract-yield.ngrok-free.dev",
+]
