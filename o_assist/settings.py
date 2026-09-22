@@ -29,7 +29,10 @@ SECRET_KEY = "django-insecure-qmn7b%tm(c0)6je$#mn)hh=x@n-lk5ua0o7r&n2ff80!)@u^6(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "overshot-refract-yield.ngrok-free.dev",
+    "127.0.0.1"
+]
 
 
 # Application definition
@@ -46,6 +49,9 @@ INSTALLED_APPS = [
     "AI",
     "rest_framework",
     "rest_framework_simplejwt",
+    "tailwind",
+    "theme",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +63,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
+    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 ROOT_URLCONF = "o_assist.urls"
 
@@ -129,6 +139,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATICFILES_DIRS = [
+    BASE_DIR / "o_assist/static/",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -147,3 +161,15 @@ REST_FRAMEWORK = {
 # Simple JWT settings
 ACCESS_TOKEN_LIFETIME = int(os.environ.get("ACCESS_TOKEN_LIFETIME", 5))  # in minutes
 REFRESH_TOKEN_LIFETIME = int(os.environ.get("REFRESH_TOKEN_LIFETIME", 60))  # in minutes
+
+# Tailwind CSS settings
+TAILWIND_APP_NAME = "theme"
+
+
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://overshot-refract-yield.ngrok-free.dev",
+]

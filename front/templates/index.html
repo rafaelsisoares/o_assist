@@ -1,11 +1,24 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
+    {% tailwind_css %}
 </head>
-<body>
-    <main>{% block content %} {% endblock %}</main>
+<body class="m-0 box-border">
+    <main>
+        <header class="m-auto p-3 bg-orange-400 fixed top-0 left-0 right-0">
+            <nav class="flex flex-row-reverse justify-between">
+                {% block nav %} {% endblock %}
+                <img src="{% static 'img/O_ASSIST_header.webp'%}" alt="Logo do Header" class="w-30 h-10 ml-10">
+            </nav>
+        </header>
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        {% block footer %} {% endblock %}
+    </footer>
 </body>
 </html>
